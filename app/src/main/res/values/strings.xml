@@ -6,7 +6,6 @@
     <string name="play_button_loaded">Click Button to play Ad!</string>
     <string name="ad_not_loaded">Ad not loaded yet</string>
     <string name="watch_thanks">Thank you for watching!</string>
-    <string name="ad_key">ca-app-pub-3940256099942544/5224354917</string>
     <string name="ad_watch_count_prompt">Ad watch count:</string>
     <string name="ZERO">0</string>
     <string name="ad_count_key">ad_count_key</string>
