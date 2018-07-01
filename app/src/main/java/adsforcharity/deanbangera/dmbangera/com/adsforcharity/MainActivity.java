@@ -1,10 +1,12 @@
 package adsforcharity.deanbangera.dmbangera.com.adsforcharity;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -23,9 +25,12 @@ import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
+import preferences.SettingsActivity;
+
 public class MainActivity extends AppCompatActivity implements RewardedVideoAdListener {
 
     private static final String TAG = "MAIN ACTIVITY";
+    static final String CHANNEL_ID = "REMINDER_CHANNEL_ID";
     private RewardedVideoAd mRewardedVideoAd;
 
     @Override
@@ -34,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        createNotificationChannel();
 
         MobileAds.initialize(this, getString(R.string.ad_key));
         // Use an activity context to get the rewarded video instance.
@@ -197,6 +204,26 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
             fab.setVisibility(View.INVISIBLE);
             TextView loadedText = findViewById(R.id.loadedText);
             loadedText.setVisibility((View.INVISIBLE));
+        }
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            } else {
+                Log.d(TAG, "createNotificationChannel: Failed");
+            }
         }
     }
 }

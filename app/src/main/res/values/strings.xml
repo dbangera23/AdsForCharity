@@ -1,5 +1,5 @@
 <resources>
-    <string name="daily">Daily</string>
+
     <string name="app_name">AdsForCharity</string>
     <string name="action_settings">Settings</string>
     <string name="play_button_load">Loading Video Ad</string>
@@ -9,7 +9,21 @@
     <string name="ad_watch_count_prompt">Ad watch count:</string>
     <string name="ZERO">0</string>
     <string name="ad_count_key">ad_count_key</string>
-    <string name="notification_title">Notifications</string>
+    <string name="notification_title">Enable</string>
     <string name="notification_pref_key">notification_pref</string>
     <string name="notification_freq_key">notification_freq_key</string>
+    <string name="channel_name">Reminders</string>
+    <string name="channel_description">Reminder notification to watch ADs at frequency specified</string>
+    <string name="alarm_cancel_fail">Failed to cancel alarm</string>
+    <string name="alarm_set_fail">Failed to set alarm</string>
+    <string name="daily">Daily</string>
+    <string name="weekly">Weekly</string>
+    <string name="bi_Weekly">Bi-Weekly</string>
+    <string name="monthly">Monthly</string>
+    <string name="cancel">Cancel</string>
+    <string name="set">Set</string>
+    <string name="time">Time</string>
+    <string name="notification_time_key">notification_time_key</string>
+    <string name="notification_default_time">18:00</string>
+    <string name="pref_notification_title">NOTIFICATIONS</string>
 </resources>

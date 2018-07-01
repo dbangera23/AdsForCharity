@@ -2,8 +2,8 @@
 <resources>
     <string-array name="frequency_array">
         <item>@string/daily</item>
-        <item>Weekly</item>
-        <item>Bi-Weekly</item>
-        <item>Monthly</item>
+        <item>@string/weekly</item>
+        <item>@string/bi_Weekly</item>
+        <item>@string/monthly</item>
     </string-array>
 </resources>

@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <CheckBoxPreference
-        android:key="@string/notification_pref_key"
-        android:title="@string/notification_title"
-        android:defaultValue="false"/>
-    <ListPreference
-        android:dependency="@string/notification_pref_key"
-        android:title="Frequency"
-        android:dialogTitle="Frequency"
-        android:key="@string/notification_freq_key"
-        android:entries="@array/frequency_array"
-        android:entryValues="@array/frequency_array"
-        android:defaultValue="@string/daily"/>
+    <PreferenceCategory
+        android:title="@string/pref_notification_title">
+        <CheckBoxPreference
+            android:key="@string/notification_pref_key"
+            android:title="@string/notification_title"
+            android:defaultValue="false"/>
+        <ListPreference
+            android:dependency="@string/notification_pref_key"
+            android:title="Frequency"
+            android:dialogTitle="Frequency"
+            android:key="@string/notification_freq_key"
+            android:entries="@array/frequency_array"
+            android:entryValues="@array/frequency_array"
+            android:defaultValue="@string/daily"/>
+        <preferences.TimePreference
+            android:dependency="@string/notification_pref_key"
+            android:title="@string/time"
+            android:summary="@string/notification_default_time"
+            android:key="@string/notification_time_key" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
