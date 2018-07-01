@@ -12,9 +12,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,8 +29,8 @@ import preferences.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity implements RewardedVideoAdListener {
 
-    private static final String TAG = "MAIN ACTIVITY";
     static final String CHANNEL_ID = "REMINDER_CHANNEL_ID";
+    private static final String TAG = "MAIN ACTIVITY";
     private RewardedVideoAd mRewardedVideoAd;
 
     @Override

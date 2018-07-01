@@ -15,6 +15,13 @@ public class TimePreference extends DialogPreference {
     private int lastMinute = 0;
     private TimePicker picker = null;
 
+    public TimePreference(Context context, AttributeSet attrs) {
+        super(context, attrs);
+
+        setPositiveButtonText(context.getString(R.string.set));
+        setNegativeButtonText(context.getString(R.string.cancel));
+    }
+
     public static int getHour(String time) {
         String[] pieces = time.split(":");
 
@@ -33,14 +40,6 @@ public class TimePreference extends DialogPreference {
             minute = "0" + minute;
         }
         return minute;
-    }
-
-
-    public TimePreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-
-        setPositiveButtonText(context.getString(R.string.set));
-        setNegativeButtonText(context.getString(R.string.cancel));
     }
 
     @Override

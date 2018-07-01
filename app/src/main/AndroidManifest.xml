@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name="preferences.SettingsActivity" />
+
         <receiver android:name=".AlarmReceiver" />
     </application>
 

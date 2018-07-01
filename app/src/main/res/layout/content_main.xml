@@ -10,23 +10,23 @@
 
     <ProgressBar
         android:id="@+id/videoProgress"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/loadText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/play_button_load"
-        app:layout_constraintTop_toBottomOf="@id/videoProgress"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/videoProgress" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -45,19 +45,19 @@
         android:layout_height="wrap_content"
         android:text="@string/play_button_loaded"
         android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@id/fab"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fab" />
 
     <TextView
         android:id="@+id/adCountPrompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ad_watch_count_prompt"
         android:layout_margin="8dp"
+        android:text="@string/ad_watch_count_prompt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/adCount"

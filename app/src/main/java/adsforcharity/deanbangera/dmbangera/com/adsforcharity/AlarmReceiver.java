@@ -9,9 +9,6 @@ import android.media.RingtoneManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import adsforcharity.deanbangera.dmbangera.com.adsforcharity.MainActivity;
-import adsforcharity.deanbangera.dmbangera.com.adsforcharity.R;
-
 public class AlarmReceiver extends BroadcastReceiver {
 
     private static final String TAG = "AlarmReceiver";
@@ -27,7 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder mNotifyBuilder = new NotificationCompat.Builder(context, MainActivity.CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground )
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText("Time to watch an AD for charity!")
                 .setContentIntent(pendingIntent)
