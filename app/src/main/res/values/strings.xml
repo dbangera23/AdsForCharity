@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_name">AdsForCharity</string>
-    <string name="action_settings">Settings</string>
+    <string name="settings">Settings</string>
     <string name="play_button_load">Loading Video Ad</string>
     <string name="play_button_loaded">Click Button to play Ad!</string>
     <string name="ad_not_loaded">Ad not loaded yet</string>
@@ -26,4 +26,10 @@
     <string name="notification_time_key">notification_time_key</string>
     <string name="notification_default_time">18:00</string>
     <string name="pref_notification_title">NOTIFICATIONS</string>
+    <string name="charities">Charities</string>
+    <string name="donate">Donate</string>
+    <string name="video">Video</string>
+    <string name="navigation">Navigation</string>
+    <string name="about">About</string>
+    <string name="charity_thumbnail">Charity Thumbnail</string>
 </resources>

@@ -94,6 +94,9 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         calendar.set(Calendar.HOUR_OF_DAY, TimePreference.getHour(time));
         calendar.set(Calendar.MINUTE, TimePreference.getMinute(time));
         calendar.set(Calendar.SECOND, 0);
+        if (calendar.before(Calendar.getInstance())) {
+            calendar.add(Calendar.DATE, 1);
+        }
         Intent intent1 = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) this.getSystemService(ALARM_SERVICE);

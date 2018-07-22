@@ -2,36 +2,33 @@ package adsforcharity.deanbangera.dmbangera.com.adsforcharity;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.reward.RewardItem;
-import com.google.android.gms.ads.reward.RewardedVideoAd;
-import com.google.android.gms.ads.reward.RewardedVideoAdListener;
-
+import fragments.CharitiesFragment;
+import fragments.VideoFragment;
 import preferences.SettingsActivity;
 
-public class MainActivity extends AppCompatActivity implements RewardedVideoAdListener {
+public class MainActivity extends AppCompatActivity
+        implements CharitiesFragment.OnListFragmentInteractionListener {
 
     static final String CHANNEL_ID = "REMINDER_CHANNEL_ID";
     private static final String TAG = "MAIN ACTIVITY";
-    private RewardedVideoAd mRewardedVideoAd;
+
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,173 +36,73 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.setDisplayHomeAsUpEnabled(true);
+            actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+        }
+
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+                        mDrawerLayout.closeDrawers();
+
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        Fragment fragment;
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_video:
+                                fragment = new VideoFragment();
+                                break;
+                            case R.id.nav_donate:
+                                // TODO: implement donate fragment
+                                fragment = new VideoFragment();
+                                break;
+                            case R.id.nav_charities:
+                                fragment = new CharitiesFragment();
+                                break;
+                            case R.id.nav_settings:
+                                Intent settingIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+                                startActivity(settingIntent);
+                                return true;
+                            case R.id.nav_about:
+                                // TODO: implement about fragment
+                                fragment = new VideoFragment();
+                                break;
+                            default:
+                                fragment = new VideoFragment();
+                                break;
+                        }
+                        fragmentTransaction.replace(R.id.content_frame, fragment);
+                        fragmentTransaction.commit();
+
+                        return true;
+                    }
+                });
+        navigationView.getMenu().getItem(0).setChecked(true);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, new VideoFragment())
+                .commit();
 
         createNotificationChannel();
-
-        MobileAds.initialize(this, getString(R.string.ad_key));
-        // Use an activity context to get the rewarded video instance.
-        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
-        mRewardedVideoAd.setRewardedVideoAdListener(this);
-
-        // play button click listener
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mRewardedVideoAd.isLoaded()) {
-                    mRewardedVideoAd.show();
-                } else {
-                    Snackbar.make(view, R.string.ad_not_loaded, Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            }
-        });
-
-        // Update Ad count
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        int highScore = sharedPref.getInt(getString(R.string.ad_count_key), 0);
-        TextView ad_count_view = findViewById(R.id.adCount);
-        ad_count_view.setText(String.valueOf(highScore));
-
-
-        loadRewardedVideoAd();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent settingIntent = new Intent(this, SettingsActivity.class);
-            startActivity(settingIntent);
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-    private void loadRewardedVideoAd() {
-        Log.d(TAG, "loadRewardedVideoAd");
-        mRewardedVideoAd.loadAd(getString(R.string.ad_key),
-                new AdRequest.Builder().build());
-    }
-
-    @Override
-    public void onRewarded(RewardItem reward) {
-        Log.d(TAG, "onRewarded");
-        // Watched a video so lets increment the count
-        incrementAdCount();
-        Toast.makeText(this, R.string.watch_thanks, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onRewardedVideoAdLeftApplication() {
-        Log.d(TAG, "onRewardedVideoAdLeftApplication");
-    }
-
-    @Override
-    public void onRewardedVideoAdClosed() {
-        Log.d(TAG, "onRewardedVideoAdClosed");
-        // Load the next rewarded video ad.
-        loadRewardedVideoAd();
-        // Change visibility of views
-        setVideoLoadedVisibility(false);
-    }
-
-    private void incrementAdCount() {
-        // Update VIew
-        TextView count_view = findViewById(R.id.adCount);
-        int ad_count = Integer.parseInt(count_view.getText().toString());
-        ad_count++;
-        count_view.setText(String.valueOf(ad_count));
-        // Update store
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt(getString(R.string.ad_count_key), ad_count);
-        editor.apply();
-    }
-
-    @Override
-    public void onRewardedVideoAdFailedToLoad(int errorCode) {
-        Log.d(TAG, "onRewardedVideoAdFailedToLoad");
-    }
-
-    @Override
-    public void onRewardedVideoAdLoaded() {
-        Log.d(TAG, "onRewardedVideoAdLoaded");
-        setVideoLoadedVisibility(true);
-    }
-
-    @Override
-    public void onRewardedVideoAdOpened() {
-        Log.d(TAG, "onRewardedVideoAdOpened");
-    }
-
-    @Override
-    public void onRewardedVideoStarted() {
-        Log.d(TAG, "onRewardedVideoStarted");
-    }
-
-    @Override
-    public void onRewardedVideoCompleted() {
-        Log.d(TAG, "onRewardedVideoCompleted");
-    }
-
-    @Override
-    public void onResume() {
-        Log.d(TAG, "onResume");
-        mRewardedVideoAd.resume(this);
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        Log.d(TAG, "onPause");
-        mRewardedVideoAd.pause(this);
-        super.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        Log.d(TAG, "onDestroy");
-        mRewardedVideoAd.destroy(this);
-        super.onDestroy();
-    }
-
-    private void setVideoLoadedVisibility(boolean visibility) {
-        if (visibility) {
-            ProgressBar progressBar = findViewById(R.id.videoProgress);
-            progressBar.setVisibility(View.INVISIBLE);
-            TextView loadText = findViewById(R.id.loadText);
-            loadText.setVisibility((View.INVISIBLE));
-
-            FloatingActionButton fab = findViewById(R.id.fab);
-            fab.setVisibility(View.VISIBLE);
-            TextView loadedText = findViewById(R.id.loadedText);
-            loadedText.setVisibility((View.VISIBLE));
-        } else {
-            ProgressBar progressBar = findViewById(R.id.videoProgress);
-            progressBar.setVisibility(View.VISIBLE);
-            TextView loadText = findViewById(R.id.loadText);
-            loadText.setVisibility((View.VISIBLE));
-
-            FloatingActionButton fab = findViewById(R.id.fab);
-            fab.setVisibility(View.INVISIBLE);
-            TextView loadedText = findViewById(R.id.loadedText);
-            loadedText.setVisibility((View.INVISIBLE));
-        }
-    }
 
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
@@ -225,5 +122,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                 Log.d(TAG, "createNotificationChannel: Failed");
             }
         }
+    }
+
+    @Override
+    public void onListFragmentInteraction() {
+        Log.d(TAG, "onListFragmentInteraction: FRAGMENT TO ACTIVITY COMMUNICATION");
     }
 }

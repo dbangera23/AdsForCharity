@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <group
+        android:id="@+id/main_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_video"
+            android:icon="@drawable/ic_play_arrow_black_24dp"
+            android:title="@string/video" />
+        <item
+            android:id="@+id/nav_donate"
+            android:icon="@drawable/ic_attach_money_black_24dp"
+            android:title="@string/donate" />
+        <item
+            android:id="@+id/nav_charities"
+            android:icon="@drawable/ic_local_florist_black_24dp"
+            android:title="@string/charities" />
+    </group>
+    <group
+        android:id="@+id/setting_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/settings" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_help_black_24dp"
+            android:title="@string/about" />
+    </group>
+</menu>

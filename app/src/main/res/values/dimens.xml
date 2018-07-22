@@ -1,1 +1,9 @@
-<resources />
+<resources>
+    <dimen name="charity_name_padding">10dp</dimen>
+    <dimen name="description_padding_bottom">5dp</dimen>
+    <dimen name="description_size">12sp</dimen>
+    <dimen name="name_size">15sp</dimen>
+    <dimen name="charity_pic_height">240sp</dimen>
+    <dimen name="card_width">300sp</dimen>
+    <dimen name="card_margin">12dp</dimen>
+</resources>
